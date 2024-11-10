@@ -17,7 +17,7 @@ public class Algorithms {
 		}
 	}
 	public static void insertionSort(int[] arr) {
-		for(int i = 1; i < arr.length; i++) {
+		for(int i = 1; i < arr.length; i+= 1) {
 			int key = arr[i];
 			int j = i - 1;
 			while(j >= 0 && arr[j] > key) {
@@ -145,7 +145,22 @@ public class Algorithms {
 		return l;
 	}
 	public static void shellSort(int[] arr) {
-		
+		int h = 1;
+		while(h < arr.length/3) {
+			h = h*3 + 1;
+		}
+		while(h > 0) {
+			for(int i = h; i < arr.length; i++) {
+				int key = arr[i];
+				int j = i;
+				while(j > h - 1 && arr[j - h] > key) {
+					arr[j] = arr[j - h];
+					j-= h;
+				}
+				arr[j] = key;
+			}
+			h = (h - 1)/3;
+		}
 	}
 }
 

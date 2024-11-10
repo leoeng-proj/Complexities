@@ -5,7 +5,7 @@ public class Test {
 		int[] array = new int[8];
 		populateArray(array);
 		printArray(array);
-		Algorithms.quickSort(array);
+		Algorithms.shellSort(array);
 		printArray(array);
 	}
 	public static void printArray(int arr[]) {
