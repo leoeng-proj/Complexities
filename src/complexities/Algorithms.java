@@ -42,7 +42,7 @@ public class Algorithms {
 		}
 	}
 	public static void mergeSort(int[] arr) {
-		recMergeSort(arr, new int[arr.length], 0, arr.length);
+		recMergeSort(arr, new int[arr.length], 0, arr.length - 1);
 	}
 	private static void recMergeSort(int[] arr, int[] workspace, int left, int right) {
 		if(left == right) {
@@ -51,17 +51,13 @@ public class Algorithms {
 		int mid = (left+right)/2;
 		recMergeSort(arr, workspace, left, mid);
 		recMergeSort(arr, workspace, mid+1, right);
-		
 		merge(arr, workspace, left, mid + 1, right);
 	}
 	private static void merge(int[] arr, int[] workspace, int leftLowerBound, int rightLowerBound, int rightUpperBound) {
 		int i = leftLowerBound;
 		int j = rightLowerBound;
 		int k = 0;
-
-		int nElems = rightUpperBound - leftLowerBound + 1;
-		System.out.println(nElems +  " " + leftLowerBound + " " + rightLowerBound);
-		while(i <= rightLowerBound - 1 && j < rightUpperBound) {
+		while(i < rightLowerBound && j <= rightUpperBound) {
 			if(arr[i] < arr[j]) {
 				workspace[k++] = arr[i++];
 			}
@@ -69,16 +65,15 @@ public class Algorithms {
 				workspace[k++] = arr[j++];
 			}
 		}
-		while(i <= rightLowerBound - 1) {
+		while(i < rightLowerBound) {
 			workspace[k++] = arr[i++];
 		}
 		while(j <= rightUpperBound) {
 			workspace[k++] = arr[j++];
 		}
-		for(int l = 0; l < nElems; l++) {
+		for(int l = 0; l < k; l++) {
 			arr[leftLowerBound + l] = workspace[l];
 		}
-//		printArray(arr);
 	}
 	private static void printArray(int arr[]) {
 		for(int i : arr) {
