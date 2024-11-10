@@ -1,6 +1,7 @@
 package complexities;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Algorithms {
 
@@ -32,7 +33,6 @@ public class Algorithms {
 			for(int j = min+1; j < arr.length; j++) {
 				if(arr[j] < arr[min]) {
 					min = j;
-					
 				}
 			}
 			int temp = arr[i];
@@ -41,17 +41,43 @@ public class Algorithms {
 			
 		}
 	}
+	public static void radixSort(int[] arr) {
+		//works except for arrays like: [40, 30, 10, 70, 60, 50, 90]
+		LinkedList<Integer>[] lists = new LinkedList[10];
+		boolean flag = true;
+		int pow = 1;
+		while(flag) {
+			flag = false;
+			for(int num : arr) {
+				int idx = (int)((num % Math.pow(10, pow)) / Math.pow(10, pow - 1));
+				flag = idx != 0;
+				if(lists[idx] == null) {
+					lists[idx] = new LinkedList<Integer>();
+				}
+				lists[idx].add(num);
+			}
+			pow++;
+			int i = 0;
+			for(LinkedList<Integer> list : lists) {
+				if(list != null && !list.isEmpty()) {
+					for(Integer num : list) {
+						arr[i++] = num;
+					}
+					list.clear();
+				}
+			}
+		}
+	}
 	public static void mergeSort(int[] arr) {
 		recMergeSort(arr, new int[arr.length], 0, arr.length - 1);
 	}
 	private static void recMergeSort(int[] arr, int[] workspace, int left, int right) {
-		if(left == right) {
-			return;
+		if(left < right) {
+			int mid = (left+right)/2;
+			recMergeSort(arr, workspace, left, mid);
+			recMergeSort(arr, workspace, mid+1, right);
+			merge(arr, workspace, left, mid + 1, right);
 		}
-		int mid = (left+right)/2;
-		recMergeSort(arr, workspace, left, mid);
-		recMergeSort(arr, workspace, mid+1, right);
-		merge(arr, workspace, left, mid + 1, right);
 	}
 	private static void merge(int[] arr, int[] workspace, int leftLowerBound, int rightLowerBound, int rightUpperBound) {
 		int i = leftLowerBound;
@@ -75,12 +101,12 @@ public class Algorithms {
 			arr[leftLowerBound + l] = workspace[l];
 		}
 	}
-	private static void printArray(int arr[]) {
-		for(int i : arr) {
-			System.out.print(i + " ");
-		}
-		System.out.println();
-	}
+//	private static void printArray(int arr[]) {
+//		for(int i : arr) {
+//			System.out.print(i + " ");
+//		}
+//		System.out.println();
+//	}
 }
 
 	
