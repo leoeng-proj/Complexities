@@ -44,13 +44,11 @@ public class Algorithms {
 	public static void radixSort(int[] arr) {
 		//works except for arrays like: [40, 30, 10, 70, 60, 50, 90]
 		LinkedList<Integer>[] lists = new LinkedList[10];
-		boolean flag = true;
+		int k = largestLength(arr);
 		int pow = 1;
-		while(flag) {
-			flag = false;
+		while(k >= 0) {
 			for(int num : arr) {
 				int idx = (int)((num % Math.pow(10, pow)) / Math.pow(10, pow - 1));
-				flag = idx != 0;
 				if(lists[idx] == null) {
 					lists[idx] = new LinkedList<Integer>();
 				}
@@ -66,7 +64,25 @@ public class Algorithms {
 					list.clear();
 				}
 			}
+			k--;
 		}
+	}
+	private static int largestLength(int[] arr) {
+		int count = 0;
+		int k = count;
+		for(int a : arr) {
+			int n = a % 10;
+			while(n != 0 || a != 0) {
+				a /= 10;
+				n = a % 10;
+				count++;
+			}
+			if(count > k) {
+				k = count;
+			}
+			count = 0;
+		}
+		return k;
 	}
 	public static void mergeSort(int[] arr) {
 		recMergeSort(arr, new int[arr.length], 0, arr.length - 1);
@@ -101,12 +117,36 @@ public class Algorithms {
 			arr[leftLowerBound + l] = workspace[l];
 		}
 	}
-//	private static void printArray(int arr[]) {
-//		for(int i : arr) {
-//			System.out.print(i + " ");
-//		}
-//		System.out.println();
-//	}
+	public static void quickSort(int[] arr) {
+		quickSortRec(arr, 0, arr.length - 1);
+	}
+	private static void quickSortRec(int[] arr, int l, int r) {
+		if(l < r) {
+			int p = partition(arr, arr[r], l, r);
+			quickSortRec(arr, l, p-1);
+			quickSortRec(arr, p+1, r);
+		}
+	}
+	private static int partition(int[] arr, int pivot, int l, int r) {
+		while(l < r) {
+			while(arr[l] < pivot) {
+				l++;
+			}
+			while(arr[r] > pivot) {
+				r--;
+			}
+			if(l == r || arr[l] == arr[r]) {
+				break;
+			}
+			int temp = arr[r];
+			arr[r] = arr[l];
+			arr[l] = temp;
+		}
+		return l;
+	}
+	public static void shellSort(int[] arr) {
+		
+	}
 }
 
 	
