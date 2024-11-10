@@ -1,5 +1,7 @@
 package complexities;
 
+import java.util.Arrays;
+
 public class Algorithms {
 
 	public static void bubbleSort(int[] arr) {
@@ -40,23 +42,49 @@ public class Algorithms {
 		}
 	}
 	public static void mergeSort(int[] arr) {
-		
+		recMergeSort(arr, new int[arr.length], 0, arr.length);
 	}
-	private static void merge(int[] c, int low, int high, int upper) {
-		while(i < a.length && j < b.length) {
-			if(a[i] < b[j]) {
-				c[k++] = a[i++];
+	private static void recMergeSort(int[] arr, int[] workspace, int left, int right) {
+		if(left == right) {
+			return;
+		}
+		int mid = (left+right)/2;
+		recMergeSort(arr, workspace, left, mid);
+		recMergeSort(arr, workspace, mid+1, right);
+		
+		merge(arr, workspace, left, mid + 1, right);
+	}
+	private static void merge(int[] arr, int[] workspace, int leftLowerBound, int rightLowerBound, int rightUpperBound) {
+		int i = leftLowerBound;
+		int j = rightLowerBound;
+		int k = 0;
+
+		int nElems = rightUpperBound - leftLowerBound + 1;
+		System.out.println(nElems +  " " + leftLowerBound + " " + rightLowerBound);
+		while(i <= rightLowerBound - 1 && j < rightUpperBound) {
+			if(arr[i] < arr[j]) {
+				workspace[k++] = arr[i++];
 			}
 			else {
-				c[k++] = b[j++];
+				workspace[k++] = arr[j++];
 			}
 		}
-		while(i < a.length) {
-			c[k++] = a[i++];
+		while(i <= rightLowerBound - 1) {
+			workspace[k++] = arr[i++];
 		}
-		while(j < b.length) {
-			c[k++] = b[j++];
+		while(j <= rightUpperBound) {
+			workspace[k++] = arr[j++];
 		}
+		for(int l = 0; l < nElems; l++) {
+			arr[leftLowerBound + l] = workspace[l];
+		}
+//		printArray(arr);
+	}
+	private static void printArray(int arr[]) {
+		for(int i : arr) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
 	}
 }
 

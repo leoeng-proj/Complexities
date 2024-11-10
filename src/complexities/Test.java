@@ -2,10 +2,10 @@ package complexities;
 
 public class Test {
 	public static void main(String[] args) {
-		int[] array = new int[10];
+		int[] array = new int[8];
 		populateArray(array);
 		printArray(array);
-		Algorithms.insertionSort(array);
+		Algorithms.mergeSort(array);
 		printArray(array);
 	}
 	public static void printArray(int arr[]) {
