@@ -17,7 +17,7 @@ public class Algorithms {
 		}
 	}
 	public static void insertionSort(int[] arr) {
-		for(int i = 1; i < arr.length; i+= 1) {
+		for(int i = 1; i < arr.length; i++) {
 			int key = arr[i];
 			int j = i - 1;
 			while(j >= 0 && arr[j] > key) {
@@ -68,21 +68,13 @@ public class Algorithms {
 		}
 	}
 	private static int largestLength(int[] arr) {
-		int count = 0;
-		int k = count;
+		int max = arr[0];
 		for(int a : arr) {
-			int n = a % 10;
-			while(n != 0 || a != 0) {
-				a /= 10;
-				n = a % 10;
-				count++;
+			if(a > max) {
+				max = a;
 			}
-			if(count > k) {
-				k = count;
-			}
-			count = 0;
 		}
-		return k;
+		return (int) (Math.floor(Math.log10(max)) + 1);
 	}
 	public static void mergeSort(int[] arr) {
 		recMergeSort(arr, new int[arr.length], 0, arr.length - 1);

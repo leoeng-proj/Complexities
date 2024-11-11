@@ -1,11 +1,13 @@
 package complexities;
 
+import java.util.Arrays;
+
 public class Test {
 	public static void main(String[] args) {
 		int[] array = new int[8];
 		populateArray(array);
 		printArray(array);
-		Algorithms.shellSort(array);
+		Algorithms.radixSort(array);
 		printArray(array);
 	}
 	public static void printArray(int arr[]) {
