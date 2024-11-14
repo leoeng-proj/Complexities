@@ -127,14 +127,42 @@ public class Algorithms {
 			while(arr[r] > pivot) {
 				r--;
 			}
-			if(l == r || arr[l] == arr[r]) {
+			if(l < r) {
+				swap(arr, l, r);
+				if(arr[l] == arr[r]) {
+					l++;
+					r--;	
+				}
+			}
+		}
+//		System.out.println(Arrays.toString(arr));
+		swap(arr, l, r);
+		return l;
+	}
+	public static int partitionIt(int[] arr, int pivot, int l, int r) {
+		int leftPtr = l - 1;
+		int rightPtr = r + 1;
+		while(true) {
+			while(leftPtr < r && arr[++leftPtr] < pivot) {
+				;
+			}
+			while(rightPtr > l && arr[--rightPtr] >= pivot) {
+				;
+			}
+			if(leftPtr >= rightPtr) {
 				break;
 			}
-			int temp = arr[r];
-			arr[r] = arr[l];
-			arr[l] = temp;
+			else {
+				swap(arr, leftPtr, rightPtr);
+			}
 		}
-		return l;
+		swap(arr, leftPtr, r);
+		return leftPtr;
+	}
+	public static void swap(int[] arr, int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
 	}
 	public static void shellSort(int[] arr) {
 		int h = 1;
@@ -155,5 +183,3 @@ public class Algorithms {
 		}
 	}
 }
-
-	
